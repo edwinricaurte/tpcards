@@ -1,0 +1,7 @@
+04/02/2025 6:23 PM
+{"email":["The email field must be a valid email address."]}
+
+04/02/2025 6:23 PM
+E2025234830UTC430 C0000004830202504UTCWed, 02 Apr 2025 18:23:48 +0000
+{"name":"Edwin Clavijo","email":"edwinricaurte@gmail.com","phone_number":"203-554-9455","created_at":"2025-04-02 18:23:48"}
+

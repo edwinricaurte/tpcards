@@ -1,0 +1,81 @@
+/* ================================================================================================
+// 	File Name: style.scss
+// 	Description: Style for customization.
+// 	----------------------------------------------------------------------------------------------
+// 	Item Name: Chameleon Admin - Modern Bootstrap 4 WebApp & Dashboard HTML Template + UI Kit
+// 	Version: 1.0
+// 	Author: ThemeSelection
+// 	Author URL: https://themeselection.com/
+// ================================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.table-v-middle tbody > tr>td {
+    vertical-align: middle;
+}
+.v-table td {
+    vertical-align: middle;
+}
+img.profile-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 300px;
+    -webkit-box-shadow: 0px 0px 13px -4px rgba(0,0,0,0.93);
+    box-shadow: 0px 0px 13px -4px rgba(0,0,0,0.93);
+}
+.input-group > .input-group-prepend > .input-group-text>i {
+    font-size: unset;
+}
+.menu-collapsed h5.welcome-title {
+    display: none;
+}
+.codigo-agente-c {
+    display: inline-block;
+    cursor: text;
+    font-weight: 400;
+    border: 1px solid #28afd0;
+    background-color: transparent;
+    color: #28afd0;
+    border-radius: 1.5rem;
+    text-align: center;
+    vertical-align: middle;
+    padding: 11px 32px;
+    font-size: 1rem;
+    line-height: 1.25;
+    -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    -moz-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+.calendario-de-pagos>.fecha {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.calendario-de-pagos>.fecha>div {
+    padding: 5px;
+}
+.calendario-de-pagos>.fecha>div.numero>.indicador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background: #a9a9a9;
+    border-radius: 25px;
+    font-weight: 900;
+    color: #FFF;
+}
+.calendario-de-pagos>.fecha>div.fecha {
+    width: 120px;
+}
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: #c3c3c3 !important;
+}
+.icheck-permissions {
+    margin-bottom: 5px;
+}
