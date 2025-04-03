@@ -22,7 +22,7 @@
                             <h4 class="card-title">Statistics</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
-                                <div class='input-group'>
+                                <div class="input-group">
                                     <input type="text" name="date_range" id="date_range_filter" class="form-control" value="{{old('date_range',date('m/d/Y',strtotime('-12 months')).' - '.date('m/d/Y'))}}" />
                                     <div class="input-group-append">
                                         <span class="input-group-text">
@@ -92,7 +92,11 @@
 
             <div class="row match-height">
                 <div class="col-xl-4 col-lg-5 col-md-12">
-                    <h5 class="card-title text-bold-700 my-2">Average Spend</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title text-bold-700 my-2">Average Spend</h5>
+                        <div id="as_title"></div>
+                    </div>
+
                     <div class="card">
                         <div class="card-content">
                             <div id="recent-projects" class="media-list position-relative">
@@ -115,7 +119,11 @@
                 </div>
                 <div class="col-xl-8 col-lg-7 col-md-12">
 
-                    <h5 class="card-title text-bold-700 my-2">Loyalty Points per Month</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title text-bold-700 my-2">Loyalty Points per Month</h5>
+                        <div id="lppm_title"></div>
+                    </div>
+
                     <div class="card">
                         <div class="card-content">
                             <div id="recent-projects" class="media-list position-relative">
@@ -194,7 +202,7 @@
     }
 
     $('#date_range_filter').daterangepicker({
-        autoApply: true,
+        autoApply: false
     });
     $('#date_range_filter').on('apply.daterangepicker', function(ev, picker) {
         getMonthlyStatistics();
@@ -216,6 +224,17 @@
         }
         const json = await response.json();
         generateMonthlyStatistics(json.loyalty_points_months, json.months_labels);
+
+        var average_spend_table = $('#average_spend_table').DataTable();
+        average_spend_table.ajax.reload();
+
+        var loyalty_points_table = $('#loyalty_points_table').DataTable();
+        loyalty_points_table.ajax.reload();
+
+        let html_daterange = $('#date_range_filter').data('daterangepicker').startDate.format('MMMM YYYY')+' to '+$('#date_range_filter').data('daterangepicker').endDate.format('MMMM YYYY');
+
+        document.getElementById('as_title').innerHTML = html_daterange;
+        document.getElementById('lppm_title').innerHTML = html_daterange;
     }
 
     function generateMonthlyStatistics(monthly_statistics, labels) {
@@ -317,12 +336,11 @@
                 { name: 'purchases_qty', targets: 1, className: 'text-center','orderable': false },
                 { name: 'total_purchases', targets: 2, className: 'text-center','orderable': false },
                 { name: 'loyalty_points', targets: 3, className: 'text-center' },
-                //{ name: 'actions', targets: 5, className: 'text-center', 'orderable': false }
             ],
             order: [[0, 'asc']],
             pageLength: 10,
             searchDelay: 150,
-            "ajax": "/get-customers",
+            ajax: "/get-customers",
             processing: true,
             serverSide: true
         });
@@ -334,11 +352,18 @@
             order: [[0, 'asc']],
             pageLength: 25,
             searchDelay: 150,
-            "ajax": "/get-average-spend",
+            ajax: {
+                url: "/get-average-spend",
+                data: function(d){
+                    d.start_date = $('#date_range_filter').data('daterangepicker').startDate.format('L'),
+                    d.end_date = $('#date_range_filter').data('daterangepicker').endDate.format('L')
+                }
+            },
             processing: true,
             serverSide: true,
             searching: false,
         });
+
         $('#loyalty_points_table').DataTable( {
             columnDefs: [
                 { name: 'month', targets: 0 },
@@ -347,7 +372,13 @@
             order: [[0, 'asc']],
             pageLength: 10,
             searchDelay: 150,
-            "ajax": "/get-loyalty-points",
+            ajax: {
+                url: "/get-loyalty-points",
+                data: function(d){
+                    d.start_date = $('#date_range_filter').data('daterangepicker').startDate.format('L'),
+                    d.end_date = $('#date_range_filter').data('daterangepicker').endDate.format('L')
+                }
+            },
             processing: true,
             serverSide: true,
             searching: false,

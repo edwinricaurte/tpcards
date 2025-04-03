@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="/dynamic/app-assets/vendors/css/charts/chartist.css">
     <link rel="stylesheet" type="text/css" href="/dynamic/app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
     <link rel="stylesheet" type="text/css" href="/dynamic/app-assets/css/pages/dashboard-analytics.css">
+    <link rel="stylesheet" type="text/css" href="/dynamic/app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="/dynamic/app-assets/vendors/css/pickers/daterange/daterangepicker.css">
 @stop
 @section('content')
 <div class="app-content content">
@@ -20,7 +22,14 @@
                             <h4 class="card-title">Statistics</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
-
+                                <div class="input-group">
+                                    <input type="text" name="date_range" id="date_range_filter" class="form-control" value="{{old('date_range',date('m/d/Y',strtotime('-12 months')).' - '.date('m/d/Y'))}}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <span class="ft-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-content collapse show">
@@ -83,27 +92,24 @@
 
             <div class="row match-height">
                 <div class="col-xl-4 col-lg-5 col-md-12">
-                    <h5 class="card-title text-bold-700 my-2">Average Spend</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title text-bold-700 my-2">Average Spend</h5>
+                        <div id="as_title"></div>
+                    </div>
+
                     <div class="card">
                         <div class="card-content">
                             <div id="recent-projects" class="media-list position-relative">
                                 <div class="table-responsive">
-                                    <table class="table table-padded table-xl mb-0" id="recent-project-table">
+                                    <table class="table table-padded table-xl mb-0" id="average_spend_table">
                                         <thead>
                                         <tr>
-                                            <th class="border-top-0" style="vertical-align: middle;">Month</th>
-                                            <th class="border-top-0" style="vertical-align: middle;">Amount</th>
+                                            <th class="border-top-0">Month</th>
+                                            <th class="border-top-0">Amount</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($average_spend_per_month as $month)
-                                            <tr>
-                                                <td>
-                                                    <div>{{date('M Y',strtotime($month->month.'-01'))}}</div>
-                                                </td>
-                                                <td>${{number_format($month->average_spend,2,'.',',')}}</td>
-                                            </tr>
-                                        @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -112,12 +118,40 @@
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-7 col-md-12">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title text-bold-700 my-2">Loyalty Points per Month</h5>
+                        <div id="lppm_title"></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-content">
+                            <div id="recent-projects" class="media-list position-relative">
+                                <div class="table-responsive">
+                                    <table class="table table-padded table-xl mb-0" id="loyalty_points_table">
+                                        <thead>
+                                        <tr>
+                                            <th class="border-top-0" style="vertical-align: middle;">Month</th>
+                                            <th class="border-top-0" style="vertical-align: middle;">Points</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br></br>
+
                     <h5 class="card-title text-bold-700 my-2">Customers</h5>
                     <div class="card">
                         <div class="card-content">
                             <div id="recent-projects" class="media-list position-relative">
                                 <div class="table-responsive">
-                                    <table class="table table-padded table-xl mb-0" id="recent-project-table">
+                                    <table class="table table-padded table-xl mb-0" id="customers_table">
                                         <thead>
                                         <tr>
                                             <th class="border-top-0" style="vertical-align: middle;">Customer</th>
@@ -127,54 +161,14 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($customers as $customer)
-                                        <tr>
-                                            <td>
-                                                <div>{{$customer->name}}</div>
-                                                <div>{{$customer->phone_number}}</div>
-                                                <div>{{$customer->email}}</div>
-                                            </td>
-                                            <td>{{$customer->total_qty_purchases}}</td>
-                                            <td>${{number_format($customer->total_amount_purchases,2,'.',',')}}</td>
-                                            <td>{{$customer->loyalty_points}}</td>
-                                        </tr>
-                                        @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
-                                {!! $customers->render() !!}
                             </div>
                         </div>
                     </div>
 
-                    <br><br>
-                    <h5 class="card-title text-bold-700 my-2">Loyalty Points per Month</h5>
-                    <div class="card">
-                        <div class="card-content">
-                            <div id="recent-projects" class="media-list position-relative">
-                                <div class="table-responsive">
-                                    <table class="table table-padded table-xl mb-0" id="recent-project-table">
-                                        <thead>
-                                        <tr>
-                                            <th class="border-top-0" style="vertical-align: middle;">Month</th>
-                                            <th class="border-top-0" style="vertical-align: middle;">Points</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($total_loyalty_points_per_month as $tlpp_month)
-                                            <tr>
-                                                <td>
-                                                    {{date('M Y',strtotime($tlpp_month->month.'-01'))}}
-                                                </td>
-                                                <td>{{$tlpp_month->total_loyalty_points}}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -185,99 +179,12 @@
 <script src="/dynamic/app-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
 <script src="/dynamic/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js" type="text/javascript"></script>
 <script src="/dynamic/app-assets/vendors/js/charts/chartist-plugin-legend.js" type="text/javascript"></script>
+<script src="/dynamic/app-assets/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
+
+<script src="/dynamic/app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js" type="text/javascript"></script>
+<script src="/dynamic/app-assets/vendors/js/pickers/daterange/daterangepicker.js" type="text/javascript"></script>
+
 <script>
-
-    var sales_statistics_by_months = new Chartist.Line('#project-stats', {
-        labels : {!!json_encode($statistics->months_labels)!!},
-        series: [
-            {!!json_encode($statistics->loyalty_points_months)!!}
-        ]
-    }, {
-        lineSmooth: Chartist.Interpolation.simple({
-            divisor: 2
-        }),
-        fullWidth: true,
-        height: 350,
-        showArea: true,
-        chartPadding: {
-            left: 25,
-            right: 25,
-            bottom: 12
-        },
-        axisX: {
-            showGrid: false,
-        },
-        plugins: [
-            Chartist.plugins.tooltip({
-                appendToBody: true,
-                pointClass: 'ct-point'
-            }),
-            Chartist.plugins.legend({
-                legendNames: ['Loyalty Points']
-            })
-        ],
-        low: 0,
-        onlyInteger: true,
-    });
-
-    sales_statistics_by_months.on('created', function (data) {
-        var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-        defs.elem('linearGradient', {
-            id: 'area-gradient',
-            x1: 1,
-            y1: 0,
-            x2: 0,
-            y2: 0
-        }).elem('stop', {
-            offset: 0,
-            'stop-color': 'rgba(1,213,255, 1)'
-        }).parent().elem('stop', {
-            offset: 1,
-            'stop-color': 'rgb(110,246,246)'
-        })
-
-        defs.elem('linearGradient', {
-            id: 'area-gradient-2',
-            x1: 1,
-            y1: 0,
-            x2: 0,
-            y2: 0
-        }).elem('stop', {
-            offset: 0,
-            'stop-color': 'rgb(0,114,184)'
-        }).parent().elem('stop', {
-            offset: 1,
-            'stop-color': 'rgb(26,169,255)'
-        })
-
-        return defs;
-
-
-    }).on('draw', function (data) {
-        var circleRadius = 9;
-        if (data.type === 'point') {
-            var circle = new Chartist.Svg('circle', {
-                cx: data.x,
-                cy: data.y,
-                'ct:value':data.value.y,
-                r: circleRadius,
-                class: data.value.y >= 10 ? 'ct-point-circle ct-point' : 'ct-point ct-point-circle-transperent'
-            });
-            data.element.replace(circle);
-        }
-        if (data.type === 'line' || data.type == 'area') {
-            data.element.animate({
-                d: {
-                    begin: 1000,
-                    dur: 1000,
-                    from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                    to: data.path.clone().stringify(),
-                    easing: Chartist.Svg.Easing.easeOutQuint
-                }
-            });
-        }
-    });
-
     function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
         try {
             decimalCount = Math.abs(decimalCount);
@@ -293,5 +200,189 @@
             console.log(e)
         }
     }
+
+    $('#date_range_filter').daterangepicker({
+        autoApply: false
+    });
+    $('#date_range_filter').on('apply.daterangepicker', function(ev, picker) {
+        getMonthlyStatistics();
+    });
+
+    async function getMonthlyStatistics(){
+        const response = await fetch('/api/get-loyalty-points-stats', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+                start_date: $('#date_range_filter').data('daterangepicker').startDate.format('L'),
+                end_date: $('#date_range_filter').data('daterangepicker').endDate.format('L')
+            })
+        });
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        generateMonthlyStatistics(json.loyalty_points_months, json.months_labels);
+
+        var average_spend_table = $('#average_spend_table').DataTable();
+        average_spend_table.ajax.reload();
+
+        var loyalty_points_table = $('#loyalty_points_table').DataTable();
+        loyalty_points_table.ajax.reload();
+
+        let html_daterange = $('#date_range_filter').data('daterangepicker').startDate.format('MMMM YYYY')+' to '+$('#date_range_filter').data('daterangepicker').endDate.format('MMMM YYYY');
+
+        document.getElementById('as_title').innerHTML = html_daterange;
+        document.getElementById('lppm_title').innerHTML = html_daterange;
+    }
+
+    function generateMonthlyStatistics(monthly_statistics, labels) {
+
+        var monthly_statistics = new Chartist.Line('#project-stats', {
+            labels : labels,
+            series: [monthly_statistics]
+        }, {
+            lineSmooth: Chartist.Interpolation.simple({
+                divisor: 2
+            }),
+            fullWidth: true,
+            height: 350,
+            showArea: true,
+            chartPadding: {
+                left: 25,
+                right: 25,
+                bottom: 12
+            },
+            axisX: {
+                showGrid: false,
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true,
+                    pointClass: 'ct-point'
+                }),
+                Chartist.plugins.legend({
+                    legendNames: ['Loyalty Points']
+                })
+            ],
+            low: 0,
+            onlyInteger: true,
+        });
+
+        monthly_statistics.on('created', function (data) {
+            var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
+            defs.elem('linearGradient', {
+                id: 'area-gradient',
+                x1: 1,
+                y1: 0,
+                x2: 0,
+                y2: 0
+            }).elem('stop', {
+                offset: 0,
+                'stop-color': 'rgba(1,213,255, 1)'
+            }).parent().elem('stop', {
+                offset: 1,
+                'stop-color': 'rgb(110,246,246)'
+            })
+
+            defs.elem('linearGradient', {
+                id: 'area-gradient-2',
+                x1: 1,
+                y1: 0,
+                x2: 0,
+                y2: 0
+            }).elem('stop', {
+                offset: 0,
+                'stop-color': 'rgb(0,114,184)'
+            }).parent().elem('stop', {
+                offset: 1,
+                'stop-color': 'rgb(26,169,255)'
+            })
+
+            return defs;
+
+        }).on('draw', function (data) {
+            var circleRadius = 9;
+            if (data.type === 'point') {
+                var circle = new Chartist.Svg('circle', {
+                    cx: data.x,
+                    cy: data.y,
+                    'ct:value':data.value.y,
+                    r: circleRadius,
+                    class: data.value.y >= 10 ? 'ct-point-circle ct-point' : 'ct-point ct-point-circle-transperent'
+                });
+                data.element.replace(circle);
+            }
+            if (data.type === 'line' || data.type == 'area') {
+                data.element.animate({
+                    d: {
+                        begin: 1000,
+                        dur: 1000,
+                        from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                        to: data.path.clone().stringify(),
+                        easing: Chartist.Svg.Easing.easeOutQuint
+                    }
+                });
+            }
+        });
+    }
+
+    $( document ).ready(function() {
+        getMonthlyStatistics();
+        $('#customers_table').DataTable( {
+            columnDefs: [
+                { name: 'name', targets: 0 },
+                { name: 'purchases_qty', targets: 1, className: 'text-center','orderable': false },
+                { name: 'total_purchases', targets: 2, className: 'text-center','orderable': false },
+                { name: 'loyalty_points', targets: 3, className: 'text-center' },
+            ],
+            order: [[0, 'asc']],
+            pageLength: 10,
+            searchDelay: 150,
+            ajax: "/get-customers",
+            processing: true,
+            serverSide: true
+        });
+        $('#average_spend_table').DataTable( {
+            columnDefs: [
+                { name: 'month', targets: 0 },
+                { name: 'amount', targets: 1, className: 'text-center' },
+            ],
+            order: [[0, 'asc']],
+            pageLength: 25,
+            searchDelay: 150,
+            ajax: {
+                url: "/get-average-spend",
+                data: function(d){
+                    d.start_date = $('#date_range_filter').data('daterangepicker').startDate.format('L'),
+                    d.end_date = $('#date_range_filter').data('daterangepicker').endDate.format('L')
+                }
+            },
+            processing: true,
+            serverSide: true,
+            searching: false,
+        });
+
+        $('#loyalty_points_table').DataTable( {
+            columnDefs: [
+                { name: 'month', targets: 0 },
+                { name: 'points', targets: 1, className: 'text-center' },
+            ],
+            order: [[0, 'asc']],
+            pageLength: 10,
+            searchDelay: 150,
+            ajax: {
+                url: "/get-loyalty-points",
+                data: function(d){
+                    d.start_date = $('#date_range_filter').data('daterangepicker').startDate.format('L'),
+                    d.end_date = $('#date_range_filter').data('daterangepicker').endDate.format('L')
+                }
+            },
+            processing: true,
+            serverSide: true,
+            searching: false,
+        });
+    });
 </script>
 @stop
