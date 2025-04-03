@@ -183,3 +183,91 @@
 #statistics_datepicker .input-group-text {
   padding: 9px 15px;
 }
+#customers_table thead th {
+  vertical-align: top;
+}
+table#customers_table.dataTable thead .sorting_asc:before,table#customers_table.dataTable thead .sorting_desc:after{
+  top: 28px;
+}
+table#customers_table.dataTable thead .sorting_asc:after {
+  top: 28px;
+}
+table#customers_table.dataTable thead .sorting_desc:before {
+  top: 28px;
+}
+table#customers_table.dataTable thead .sorting:before {
+  top: 28px;
+}
+table#customers_table.dataTable thead .sorting:after {
+  top: 28px;
+}
+#customers_table_wrapper {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#customers_table_wrapper>div.row:first-child {
+  align-items: center;
+}
+#customers_table_wrapper #customers_table_length select {
+  padding-right: 20px !important;
+}
+
+#average_spend_table thead th {
+  vertical-align: top;
+}
+table#average_spend_table.dataTable thead .sorting_asc:before,table#average_spend_table.dataTable thead .sorting_desc:after{
+  top: 18px;
+}
+table#average_spend_table.dataTable thead .sorting_asc:after {
+  top: 18px;
+}
+table#average_spend_table.dataTable thead .sorting_desc:before {
+  top: 18px;
+}
+table#average_spend_table.dataTable thead .sorting:before {
+  top: 18px;
+}
+table#average_spend_table.dataTable thead .sorting:after {
+  top: 18px;
+}
+#average_spend_table_wrapper {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#average_spend_table_wrapper>div.row:first-child {
+  align-items: center;
+}
+#average_spend_table_wrapper #average_spend_table_length select {
+  padding-right: 20px !important;
+}
+
+
+#loyalty_points_table thead th {
+  vertical-align: top;
+}
+table#loyalty_points_table.dataTable thead .sorting_asc:before,table#loyalty_points_table.dataTable thead .sorting_desc:after{
+  top: 18px;
+}
+table#loyalty_points_table.dataTable thead .sorting_asc:after {
+  top: 18px;
+}
+table#loyalty_points_table.dataTable thead .sorting_desc:before {
+  top: 18px;
+}
+table#loyalty_points_table.dataTable thead .sorting:before {
+  top: 18px;
+}
+table#loyalty_points_table.dataTable thead .sorting:after {
+  top: 18px;
+}
+#loyalty_points_table_wrapper {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#loyalty_points_table_wrapper>div.row:first-child {
+  align-items: center;
+}
+#loyalty_points_table_wrapper #loyalty_points_table_length select {
+  padding-right: 20px !important;
+}
+

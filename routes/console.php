@@ -9,3 +9,6 @@ Artisan::command('importCustomers', function () {
 Artisan::command('createTestUser', function () {
     app('App\Http\Controllers\STPCardsController')->createTestUser();
 });
+Artisan::command('updateCustomersLoyaltyPoints', function () {
+    app('App\Http\Controllers\STPCardsController')->updateCustomersLoyaltyPoints();
+});

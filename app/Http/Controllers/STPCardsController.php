@@ -73,11 +73,18 @@ class STPCardsController extends Controller
                 }
             }
         }
+        $this->updateCustomersLoyaltyPoints();
 
     }
 
     function updateCustomersLoyaltyPoints(){
-
+        $customers = \DB::table('customers')->get();
+        foreach($customers as $customer){
+            $lotalty_program = $this->getCustomerLoyaltyPoints($customer);
+            \DB::table('customers')->where('id',$customer->id)->update([
+                'loyalty_points' => $lotalty_program->points
+            ]);
+        }
     }
 
     function getCustomerLoyaltyPoints($customer = null){
